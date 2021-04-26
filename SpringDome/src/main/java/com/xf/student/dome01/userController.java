@@ -4,6 +4,7 @@ import com.xf.student.dome01.annotation.AutoWired;
 
 import javax.swing.*;
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.stream.Stream;
 
@@ -17,6 +18,7 @@ public class userController{
 
 	public static void main(String[] args) {
 	}
+
 }
 
 class Test01{
