@@ -514,17 +514,27 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	@Override
-	public void refresh() throws BeansException, IllegalStateException {
+	public void
+	refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
 			// 准备工作
+			/**
+			 * 1,设置容器的启动时间
+			 * 2，设置活跃状态为true
+			 * 3，设置关闭状态为false
+			 * 4，获取Evironment对象，并加载当前系统的属性值到Environment对象中
+			 * 5，准备监听器和事件的集合对象，默认集合为空
+			 */
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
 			// 创建一个新的beanFactory，并将对象读取到beanFactory中
+			// 加载配置文件中的属性值到当前工厂中，最重要的就是BeanDefinition
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			//
 			// 给beanFactory设置初始值
 			prepareBeanFactory(beanFactory);
 
@@ -535,10 +545,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Invoke factory processors registered as beans in the context.
 				// 对bean的一些增强操作，后置处理器
+				// 调用各种beanFactory处理器
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
-				// 注册BeanPostProcessor接口的事件，注册的方法不会立即执行
+				// 注册BeanPostProcessor接口的事件，注册的方法不会立即执行，真正的执行在getBean方法
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
@@ -547,13 +558,16 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Initialize event multicaster for this context.
 				// 多波器，用于发布我们的监听器
+				// 初始化事件监听多路广播器
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
+				// 提供给子类扩展，比如SpringBoot中通过该类扩展，定义了tomcat启动
 				onRefresh();
 
 				// Check for listener beans and register them.
 				// 注册监听器
+				// 在所有注册的bean中查找listener bean，注册到消息广播器中
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.

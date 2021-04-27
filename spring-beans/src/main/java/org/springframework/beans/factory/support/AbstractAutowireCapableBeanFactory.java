@@ -1789,6 +1789,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			}, getAccessControlContext());
 		}
 		else {
+			// Aware接口处理器
 			//实现Aware的一些接口，设置属性值
 			invokeAwareMethods(beanName, bean);
 		}
