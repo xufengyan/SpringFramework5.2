@@ -8,6 +8,6 @@ package test.observe;
 public class observe01 implements observe{
     @Override
     public void disposeMethod() {
-        System.out.println("observe01------------------");
+        System.out.println("observe01--------我观察到了执行方法，我要去执行了----------");
     }
 }

@@ -15,11 +15,15 @@ public class observeObject {
         observe.disposeMethod();
     }
 
+    public void setObserve(test.observe.observe observe) {
+        this.observe = observe;
+    }
     public static void main(String[] args) {
 
         observe01 o = new observe01();
-
-
+        observeObject object = new observeObject();
+        object.setObserve(o);
+        object.dispost();
 
     }
 
